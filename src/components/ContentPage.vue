@@ -1,6 +1,8 @@
 <template>
   <div class="view">
-    <div class="nav"></div>
+    <div class="nav">
+      <UseIcon name="list" @click="toggleClose()"/>
+    </div>
     <h4>
       <UseIcon name="tag2" />
       {{ WebList[index].class }}
@@ -35,6 +37,9 @@ export default class ContentPage extends Vue {
   get index() {
     return this.$store.state.currentIndex;
   }
+  toggleClose(){
+    this.$store.commit('toggleClose')
+  }
 }
 </script>
 
@@ -62,6 +67,11 @@ export default class ContentPage extends Vue {
     width: 100%;
     background: #fff;
     height: 80px;
+    padding: 30px;
+    display: flex;
+    .icon {
+      fill: #555555;
+    }
   }
   .content {
     padding: 0px 0px 0px 30px;

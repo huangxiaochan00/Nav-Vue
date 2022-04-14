@@ -36,13 +36,19 @@ const webData = [
 export default new Vuex.Store({
   state: {
     webData: webData,
-    currentIndex: 0
+    currentIndex: 0,
+    isClose: false
   },
   getters: {
   },
   mutations: {
     setCurrent(state, index) {
       state.currentIndex = index
+    },
+    toggleClose(state) {
+      state.isClose = !state.isClose
+      console.log(state.isClose);
+
     }
   },
   actions: {

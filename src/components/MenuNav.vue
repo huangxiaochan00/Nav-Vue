@@ -1,5 +1,5 @@
 <template>
-  <div class="menu">
+  <div class="menu" :class="isClose ? 'close' : 'show'">
     <div class="menuHeader">
       <img src="../assets/logo.png" />
     </div>
@@ -14,13 +14,11 @@
         @click="setWebIndex(list.index)"
       >
         <UseIcon :name="list.icon" />
-        <span>{{ list.class }}</span>
+        <span v-show="!isClose">{{ list.class }}</span>
       </li>
     </ul>
   </div>
 </template>
-
-
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
@@ -38,6 +36,9 @@ export default class MenuNav extends Vue {
   get currentIndex() {
     return this.$store.state.currentIndex;
   }
+  get isClose() {
+    return this.$store.state.isClose;
+  }
   active(x: number) {
     // console.log(x);
     this.isActive = x;
@@ -52,52 +53,57 @@ export default class MenuNav extends Vue {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .menu {
-  width: 280px;
   height: 100vh;
   background: #2c2e2f;
   color: #979898;
-  // border: 1px green solid;
   .menuHeader {
-    // width: 100%;
-    // height: 80px;
     padding: 19px 20px;
-    // padding: 19px 20px;
     border-bottom: 1px #313437 solid;
     img {
-      width: 178px;
       height: 40px;
-      // border: 1px green solid;
     }
   }
   ul {
     list-style-type: none;
-    padding: 0 40px;
-  }
-
-  li {
-    border-bottom: 1px #313437 solid;
-    padding: 13px 5px;
-    display: flex;
-    align-items: center;
-    &.active {
-      color: white;
+    padding: 0;
+    li {
+      border-bottom: 1px #313437 solid;
+      padding: 13px 5px;
+      display: flex;
+      align-items: center;
+      &.active {
+        color: white;
+        .icon {
+          fill: white;
+        }
+      }
       .icon {
-        fill: white;
+        fill: #979898;
       }
     }
-    // height: 200px;
-    .icon {
-      // width: 13px;
-      // height: 13px;
-      // margin: 0 2.6px;
-      // border: 1px red solid;
-      // color: white;
-      fill: #979898;
+  }
+  &.close {
+    width: 80px;
+    img {
+      width: 40px;
     }
-    span {
-      font-size: 13px;
-      padding: 0px 10px;
-      // height: 62px;
+    li {
+      justify-content: center;
+    }
+  }
+  &.show {
+    width: 280px;
+    img {
+      width: 178px;
+    }
+    ul {
+      padding: 0 40px;
+    }
+    li {
+      span {
+        font-size: 13px;
+        padding: 0px 10px;
+      }
     }
   }
 }
