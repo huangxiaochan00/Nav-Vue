@@ -5,9 +5,7 @@
     </div>
     <ul>
       <li>
-        <!-- <div class="icon"></div> -->
-        <!-- <svgIcon name="star" /> -->
-        <SvgIcon name="add" />
+        <UseIcon name="add" />
         <span>常用推荐</span>
       </li>
       <li>
@@ -34,11 +32,10 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import SvgIcon from "@/components/SvgIcon.vue";
-
+import UseIcon from "@/components/UseIcon.vue";
 @Component({
   components: {
-    SvgIcon,
+    UseIcon,
   },
 })
 export default class MenuNav extends Vue {}

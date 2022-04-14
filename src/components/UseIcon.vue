@@ -3,9 +3,9 @@
     <use :xlink:href="'#' + name" />
   </svg>
 </template>
-<script lang="ts">
+<script lang='ts'>
 // import { Component, Prop, Vue } from "vue-property-decorator";
-import { Vue, Prop } from "vue-property-decorator";
+// import { Vue, Prop } from "vue-property-decorator";
 let importAll = (requireContext: __WebpackModuleApi.RequireContext) =>
   requireContext.keys().forEach(requireContext);
 try {
@@ -13,14 +13,14 @@ try {
 } catch (error) {
   console.log(error);
 }
-export default class SvgIcon extends Vue {
-  @Prop(String) readonly name: string | undefined;
-}
+// export default class SvgIcon extends Vue {
+//   @Prop(String) readonly name: string | undefined;
+// }
 
-// export default {
-//   name: "SvgIcon",
-//   props: ["name"],
-// };
+export default {
+  name: "UseIcon",
+  props: ["name"],
+};
 </script>
 
 <style lang="scss" scoped>
