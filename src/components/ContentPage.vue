@@ -1,41 +1,18 @@
 <template>
   <div class="view">
     <div class="nav"></div>
-    <h4>常用推荐</h4>
+    <h4>
+      <UseIcon name="tag2" />
+      {{ WebList[index].class }}
+    </h4>
     <div class="content">
-      <div class="webBox">
-        <div class="icon"></div>
-        <div class="text">
-          <strong>Dribbble</strong>
-          <span> 全球UI设计师作品分享</span>
+      <div class="webBox" v-for="data in WebList[index].data" :key="data.id">
+        <div class="icon">
+          <img :src="data.icon" alt="" />
         </div>
-      </div>
-      <div class="webBox">
-        <div class="icon"></div>
         <div class="text">
-          <strong>Dribbble</strong>
-          <span> 全球UI设计师作品分享</span>
-        </div>
-      </div>
-      <div class="webBox">
-        <div class="icon"></div>
-        <div class="text">
-          <strong>Dribbble</strong>
-          <span> 全球UI设计师作品分享</span>
-        </div>
-      </div>
-      <div class="webBox">
-        <div class="icon"></div>
-        <div class="text">
-          <strong>Dribbble</strong>
-          <span> 全球UI设计师作品分享</span>
-        </div>
-      </div>
-      <div class="webBox">
-        <div class="icon"></div>
-        <div class="text">
-          <strong>Dribbble</strong>
-          <span> 全球UI设计师作ddddddddddd品分享</span>
+          <strong>{{ data.name }}</strong>
+          <span>{{ data.brief }}</span>
         </div>
       </div>
     </div>
@@ -44,8 +21,21 @@
 
 <script lang="ts">
 // import { Component, Prop, Vue } from "vue-property-decorator";
-import {Vue } from "vue-property-decorator";
-export default class ContentPage extends Vue {}
+import { Component, Vue } from "vue-property-decorator";
+import UseIcon from "@/components/UseIcon.vue";
+@Component({
+  components: {
+    UseIcon,
+  },
+})
+export default class ContentPage extends Vue {
+  get WebList() {
+    return this.$store.state.webData;
+  }
+  get index() {
+    return this.$store.state.currentIndex;
+  }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -53,6 +43,7 @@ export default class ContentPage extends Vue {}
 .view {
   width: 100%;
   height: 100vh;
+  overflow: scroll;
   h4 {
     margin: 9px 0;
     color: #555555;
@@ -60,6 +51,12 @@ export default class ContentPage extends Vue {}
     margin: 30px 30px 0;
     font-size: 17px;
     font-weight: 400;
+    .icon {
+      width: 1.2em;
+      height: 1.2em;
+      margin-right: 8px;
+      // border: 1px red solid;
+    }
   }
   .nav {
     width: 100%;
@@ -78,7 +75,7 @@ export default class ContentPage extends Vue {}
     width: calc((100% - 120px) / 4);
     padding: 15px;
     margin: 20px 30px 0 0;
-    .icon {
+    img {
       height: 54px;
       width: 40px;
       border: 1px red solid;

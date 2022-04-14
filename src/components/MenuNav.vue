@@ -4,25 +4,17 @@
       <img src="../assets/logo.png" />
     </div>
     <ul>
-      <li>
-        <UseIcon name="add" />
-        <span>常用推荐</span>
-      </li>
-      <li>
-        <div class="icon"></div>
-        <span>博客总结</span>
-      </li>
-      <li>
-        <div class="icon"></div>
-        <span>样式推荐</span>
-      </li>
-      <li>
-        <div class="icon"></div>
-        <span>学习教程</span>
-      </li>
-      <li>
-        <div class="icon"></div>
-        <span>关于本站</span>
+      <li
+        v-for="list in classList"
+        :key="list.index"
+        :class="
+          isActive === list.index || currentIndex === list.index ? 'active' : ''
+        "
+        @mouseenter="active(list.index)"
+        @click="setWebIndex(list.index)"
+      >
+        <UseIcon :name="list.icon" />
+        <span>{{ list.class }}</span>
       </li>
     </ul>
   </div>
@@ -38,7 +30,23 @@ import UseIcon from "@/components/UseIcon.vue";
     UseIcon,
   },
 })
-export default class MenuNav extends Vue {}
+export default class MenuNav extends Vue {
+  isActive = 0;
+  get classList() {
+    return this.$store.state.webData;
+  }
+  get currentIndex() {
+    return this.$store.state.currentIndex;
+  }
+  active(x: number) {
+    // console.log(x);
+    this.isActive = x;
+  }
+  setWebIndex(index: number) {
+    // console.log(index);
+    this.$store.commit("setCurrent", index);
+  }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -71,13 +79,20 @@ export default class MenuNav extends Vue {}
     padding: 13px 5px;
     display: flex;
     align-items: center;
+    &.active {
+      color: white;
+      .icon {
+        fill: white;
+      }
+    }
     // height: 200px;
     .icon {
-      width: 13px;
-      height: 13px;
-      margin: 0 2.6px;
-      border: 1px red solid;
-      color: white;
+      // width: 13px;
+      // height: 13px;
+      // margin: 0 2.6px;
+      // border: 1px red solid;
+      // color: white;
+      fill: #979898;
     }
     span {
       font-size: 13px;
