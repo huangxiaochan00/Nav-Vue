@@ -47,7 +47,6 @@ export default new Vuex.Store({
     },
     toggleClose(state) {
       state.isClose = !state.isClose
-      console.log(state.isClose);
 
     }
   },

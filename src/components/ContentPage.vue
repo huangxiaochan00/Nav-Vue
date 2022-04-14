@@ -1,22 +1,26 @@
 <template>
   <div class="view">
     <div class="nav">
-      <UseIcon name="list" @click="toggleClose()"/>
+      <UseIcon name="list" @click="toggleClose()" />
     </div>
     <h4>
       <UseIcon name="tag2" />
       {{ WebList[index].class }}
     </h4>
     <div class="content">
+      <!-- <a href=""> -->
       <div class="webBox" v-for="data in WebList[index].data" :key="data.id">
-        <div class="icon">
-          <img :src="data.icon" alt="" />
-        </div>
-        <div class="text">
-          <strong>{{ data.name }}</strong>
-          <span>{{ data.brief }}</span>
-        </div>
+        <a :href="data.address" target="_blank">
+          <div class="icon">
+            <img :src="data.icon" alt="" />
+          </div>
+          <div class="text">
+            <strong>{{ data.name }}</strong>
+            <span>{{ data.brief }}</span>
+          </div>
+        </a>
       </div>
+      <!-- </a> -->
     </div>
   </div>
 </template>
@@ -37,8 +41,8 @@ export default class ContentPage extends Vue {
   get index() {
     return this.$store.state.currentIndex;
   }
-  toggleClose(){
-    this.$store.commit('toggleClose')
+  toggleClose() {
+    this.$store.commit("toggleClose");
   }
 }
 </script>
@@ -80,15 +84,20 @@ export default class ContentPage extends Vue {
   }
   .webBox {
     font-size: 13px;
-    display: flex;
+    // display: flex;
     background: #fff;
     width: calc((100% - 120px) / 4);
     padding: 15px;
     margin: 20px 30px 0 0;
+    a {
+      display: flex;
+      text-decoration: none;
+      color: inherit;
+    }
     img {
       height: 54px;
       width: 40px;
-      border: 1px red solid;
+      // border: 1px red solid;
       margin: 0 10px 0 0;
       padding: 7px 0;
     }
