@@ -64,7 +64,6 @@ export default class ContentPage extends Vue {
       width: 1.2em;
       height: 1.2em;
       margin-right: 8px;
-      // border: 1px red solid;
     }
   }
   .nav {
