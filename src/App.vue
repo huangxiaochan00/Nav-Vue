@@ -25,7 +25,13 @@ export default class App extends Vue {}
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  display: flex;
+  min-width: 200px;
+  // display: flex;
+}
+@media screen and (min-width: 750px) {
+  #app {
+    display: flex;
+  }
 }
 
 body {
@@ -35,5 +41,12 @@ body {
 }
 * {
   box-sizing: border-box;
+}
+ul,
+li,
+ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 </style>

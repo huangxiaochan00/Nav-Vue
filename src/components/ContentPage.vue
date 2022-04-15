@@ -1,8 +1,6 @@
 <template>
   <div class="view">
-    <div class="nav">
-      <UseIcon name="list" @click="toggleClose()" />
-    </div>
+    <div class="nav"></div>
     <div class="roll" v-for="webClass in WebList" :key="webClass.index">
       <h4>
         <UseIcon name="tag2" />
@@ -26,7 +24,6 @@
               <span>{{ data.brief }}</span>
             </div>
           </a>
-          <!-- <div class="box"></div> -->
           <div
             class="detail"
             :class="
@@ -39,7 +36,6 @@
             {{ data.brief }}
           </div>
         </div>
-        <!-- </a> -->
       </div>
     </div>
     <footer>
@@ -70,7 +66,6 @@ export default class ContentPage extends Vue {
     this.$store.commit("toggleClose");
   }
   show(index: number, currentClass: string) {
-    // console.log(e);
     this.currentWebClass = currentClass;
     this.showIndex = index;
   }
@@ -79,10 +74,44 @@ export default class ContentPage extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+@media screen and (max-width: 750px) {
+  .view {
+    .nav {
+      display: none;
+      .icon {
+        fill: #a8a5a5;
+      }
+    }
+    .webBox {
+      width: calc(100% - 30px);
+    }
+  }
+}
+@media screen and (min-width: 750px) {
+  .view {
+    height: 100vh;
+    overflow: scroll;
+    .nav {
+      width: 100%;
+      background: #fff;
+      height: 80px;
+      padding: 30px;
+      display: flex;
+      .icon {
+        fill: #555555;
+      }
+    }
+    .webBox {
+      width: calc((100% - 120px) / 4);
+    }
+    .content {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+}
 .view {
   width: 100%;
-  height: 100vh;
-  overflow: scroll;
   h4 {
     margin: 9px 0;
     color: #555555;
@@ -96,30 +125,21 @@ export default class ContentPage extends Vue {
       margin-right: 8px;
     }
   }
-  .nav {
-    width: 100%;
-    background: #fff;
-    height: 80px;
-    padding: 30px;
-    display: flex;
-    .icon {
-      fill: #555555;
-    }
+  footer {
+    font-size: 12px;
+    height: 30px;
+    line-height: 30px;
+    margin-top: 32px;
   }
   .content {
     padding: 0px 0px 0px 30px;
-    display: flex;
-    flex-wrap: wrap;
   }
   .webBox {
     font-size: 13px;
-    // display: flex;
     background: #fff;
-    width: calc((100% - 120px) / 4);
     padding: 15px;
     margin: 20px 30px 0 0;
     position: relative;
-
     .detail {
       z-index: 10;
       position: absolute;
@@ -139,7 +159,6 @@ export default class ContentPage extends Vue {
         height: 0;
         border: 7px solid;
         border-color: transparent transparent black transparent;
-        // background: black;
         position: absolute;
         top: -15.5px;
         left: calc(50% - 10px);
@@ -153,7 +172,6 @@ export default class ContentPage extends Vue {
     img {
       height: 54px;
       width: 40px;
-      // border: 1px red solid;
       margin: 0 10px 0 0;
       padding: 7px 0;
     }
@@ -162,8 +180,8 @@ export default class ContentPage extends Vue {
       flex-direction: column;
       width: calc(100% - 50px);
       text-align: left;
+      justify-content: center;
       span {
-        height: 37px;
         text-overflow: ellipsis;
         overflow: hidden;
         display: -webkit-box;
@@ -172,11 +190,5 @@ export default class ContentPage extends Vue {
       }
     }
   }
-}
-footer {
-  font-size: 12px;
-  height: 30px;
-  line-height: 30px;
-  margin-top: 32px;
 }
 </style>

@@ -2,8 +2,9 @@
   <div class="menu" :class="isClose ? 'close' : 'show'">
     <div class="menuHeader">
       <img src="../assets/logo.png" />
+      <UseIcon name="list" @click="toggleClose()" />
     </div>
-    <ul>
+    <ul class="item">
       <li
         v-for="list in classList"
         :key="list.index"
@@ -29,7 +30,7 @@ import UseIcon from "@/components/UseIcon.vue";
   },
 })
 export default class MenuNav extends Vue {
-  isActive = 0;
+  isActive = -1;
   get classList() {
     return this.$store.state.webData;
   }
@@ -39,18 +40,18 @@ export default class MenuNav extends Vue {
   get isClose() {
     return this.$store.state.isClose;
   }
-  active(x: number) {
-    // console.log(x);
-    this.isActive = x;
+  active(index: number) {
+    this.isActive = index;
   }
-  setWebIndex(index: number) {
-    // console.log(index);
-    this.$store.commit("setCurrent", index);
+  toggleClose() {
+    this.$store.commit("toggleClose");
   }
   scrollToPosition(index: number) {
+    this.isActive = index;
+    this.$store.commit("setCurrent", index);
     document.getElementsByClassName("roll")[index].scrollIntoView({
       behavior: "smooth",
-      block: "center",
+      block: "start",
       inline: "nearest",
     });
   }
@@ -59,58 +60,113 @@ export default class MenuNav extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+@media screen and (max-width: 1000px) {
+  .menu {
+    width: 80px;
+    .menuHeader {
+      img {
+        width: 40px;
+      }
+      .icon {
+        right: -50px;
+      }
+    }
+    span {
+      display: none;
+    }
+  }
+}
+@media screen and (max-width: 750px) {
+  .menu {
+    width: 100%;
+    .menuHeader {
+      img {
+        width: 178px;
+      }
+      .icon {
+        // border: 1px red solid;
+        right: 50px;
+        fill: #a8a5a5;
+      }
+    }
+    &.close {
+      .item {
+        display: none;
+      }
+    }
+    &.show {
+      .item {
+        display: block;
+        li {
+          span {
+            display: block;
+            font-size: 13px;
+            padding: 0px 10px;
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (min-width: 1000px) {
+  .menu {
+    height: 100vh;
+    .menuHeader {
+      .icon {
+        right: -50px;
+      }
+    }
+    &.close {
+      width: 80px;
+      img {
+        width: 40px;
+      }
+    }
+    &.show {
+      width: 280px;
+      img {
+        width: 178px;
+      }
+      ul {
+        padding: 0 40px;
+      }
+      li {
+        span {
+          font-size: 13px;
+          padding: 0px 10px;
+        }
+      }
+    }
+  }
+}
 .menu {
-  height: 100vh;
   background: #2c2e2f;
   color: #979898;
   .menuHeader {
     padding: 19px 20px;
     border-bottom: 1px #313437 solid;
+    position: relative;
     img {
       height: 40px;
     }
+    .icon {
+      position: absolute;
+    }
   }
-  ul {
-    list-style-type: none;
-    padding: 0;
-    li {
-      border-bottom: 1px #313437 solid;
-      padding: 13px 5px;
-      display: flex;
-      align-items: center;
-      &.active {
-        color: white;
-        .icon {
-          fill: white;
-        }
-      }
+  li {
+    border-bottom: 1px #313437 solid;
+    padding: 13px 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &.active {
+      color: white;
       .icon {
-        fill: #979898;
+        fill: white;
       }
     }
-  }
-  &.close {
-    width: 80px;
-    img {
-      width: 40px;
-    }
-    li {
-      justify-content: center;
-    }
-  }
-  &.show {
-    width: 280px;
-    img {
-      width: 178px;
-    }
-    ul {
-      padding: 0 40px;
-    }
-    li {
-      span {
-        font-size: 13px;
-        padding: 0px 10px;
-      }
+    .icon {
+      fill: #979898;
     }
   }
 }
