@@ -1,7 +1,11 @@
 <template>
   <div class="menu" :class="isClose ? 'close' : 'show'">
-    <div class="menuHeader">
-      <img src="../assets/logo.png" />
+    <div class="menuHeader" ref="aaa">
+      <img
+        v-if="(isChangeImage === -1) | (isChangeImage === 1 && !isClose)"
+        src="../assets/logo@2x.png"
+      />
+      <img v-else src="../assets/logo-collapsed@2x.png" />
       <UseIcon name="list" @click="toggleClose()" />
     </div>
     <ul class="item">
@@ -15,6 +19,7 @@
         @click="scrollToPosition(list.index)"
       >
         <UseIcon :name="list.icon" />
+
         <span v-show="!isClose">{{ list.class }}</span>
       </li>
     </ul>
@@ -30,7 +35,9 @@ import UseIcon from "@/components/UseIcon.vue";
   },
 })
 export default class MenuNav extends Vue {
+  screenWidth: number = window.innerWidth;
   isActive = -1;
+  isChangeImage = -1;
   get classList() {
     return this.$store.state.webData;
   }
@@ -39,6 +46,21 @@ export default class MenuNav extends Vue {
   }
   get isClose() {
     return this.$store.state.isClose;
+  }
+  mounted() {
+    this.setScreenHeight();
+  }
+  setScreenHeight() {
+    window.onresize = () => {
+      if (window.innerWidth < 750) {
+        this.isChangeImage = -1;
+      } else if (window.innerWidth < 1000) {
+        this.isChangeImage = 0;
+        console.log(this.isChangeImage);
+      } else {
+        this.isChangeImage = 1;
+      }
+    };
   }
   active(index: number) {
     this.isActive = index;
