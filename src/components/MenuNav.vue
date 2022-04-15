@@ -1,6 +1,6 @@
 <template>
   <div class="menu" :class="isClose ? 'close' : 'show'">
-    <div class="menuHeader" ref="aaa">
+    <div class="menuHeader">
       <img
         v-if="(isChangeImage === -1) | (isChangeImage === 1 && !isClose)"
         src="../assets/logo@2x.png"
@@ -19,7 +19,6 @@
         @click="scrollToPosition(list.index)"
       >
         <UseIcon :name="list.icon" />
-
         <span v-show="!isClose">{{ list.class }}</span>
       </li>
     </ul>
@@ -90,6 +89,7 @@ export default class MenuNav extends Vue {
         width: 40px;
       }
       .icon {
+        display: none;
         right: -50px;
       }
     }
@@ -106,8 +106,9 @@ export default class MenuNav extends Vue {
         width: 178px;
       }
       .icon {
-        // border: 1px red solid;
+        display: block;
         right: 50px;
+        top: 30px;
         fill: #a8a5a5;
       }
     }
