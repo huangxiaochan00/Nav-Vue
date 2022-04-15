@@ -3,25 +3,48 @@
     <div class="nav">
       <UseIcon name="list" @click="toggleClose()" />
     </div>
-    <h4>
-      <UseIcon name="tag2" />
-      {{ WebList[index].class }}
-    </h4>
-    <div class="content">
-      <!-- <a href=""> -->
-      <div class="webBox" v-for="data in WebList[index].data" :key="data.id">
-        <a :href="data.address" target="_blank">
-          <div class="icon">
-            <img :src="data.icon" alt="" />
+    <div class="roll" v-for="webClass in WebList" :key="webClass.index">
+      <h4>
+        <UseIcon name="tag2" />
+        {{ webClass.class }}
+      </h4>
+      <div class="content">
+        <!-- <a href=""> -->
+        <div
+          class="webBox"
+          v-for="data in webClass.data"
+          :key="data.id"
+          @mouseenter="show(data.index, webClass.class)"
+          @mouseleave="show(-1, '')"
+        >
+          <a :href="data.address" target="_blank">
+            <div class="icon">
+              <img :src="data.icon" alt="" />
+            </div>
+            <div class="text">
+              <strong>{{ data.name }}</strong>
+              <span>{{ data.brief }}</span>
+            </div>
+          </a>
+          <!-- <div class="box"></div> -->
+          <div
+            class="detail"
+            :class="
+              showIndex === data.index && currentWebClass === webClass.class
+                ? 'active'
+                : ''
+            "
+          >
+            <div class="box"></div>
+            {{ data.brief }}
           </div>
-          <div class="text">
-            <strong>{{ data.name }}</strong>
-            <span>{{ data.brief }}</span>
-          </div>
-        </a>
+        </div>
+        <!-- </a> -->
       </div>
-      <!-- </a> -->
     </div>
+    <footer>
+      Copyright © 2022 前端导航 Design by Webstack Modify by huangxiaochan
+    </footer>
   </div>
 </template>
 
@@ -35,6 +58,8 @@ import UseIcon from "@/components/UseIcon.vue";
   },
 })
 export default class ContentPage extends Vue {
+  showIndex = -1;
+  currentWebClass = "";
   get WebList() {
     return this.$store.state.webData;
   }
@@ -43,6 +68,11 @@ export default class ContentPage extends Vue {
   }
   toggleClose() {
     this.$store.commit("toggleClose");
+  }
+  show(index: number, currentClass: string) {
+    // console.log(e);
+    this.currentWebClass = currentClass;
+    this.showIndex = index;
   }
 }
 </script>
@@ -88,6 +118,33 @@ export default class ContentPage extends Vue {
     width: calc((100% - 120px) / 4);
     padding: 15px;
     margin: 20px 30px 0 0;
+    position: relative;
+
+    .detail {
+      z-index: 10;
+      position: absolute;
+      background: black;
+      border: 1px solid black;
+      color: white;
+      top: 120%;
+      width: calc(100% - 30px);
+      border-radius: 5px 5px;
+      text-align: left;
+      display: none;
+      &.active {
+        display: block;
+      }
+      .box {
+        width: 0;
+        height: 0;
+        border: 7px solid;
+        border-color: transparent transparent black transparent;
+        // background: black;
+        position: absolute;
+        top: -15.5px;
+        left: calc(50% - 10px);
+      }
+    }
     a {
       display: flex;
       text-decoration: none;
@@ -115,5 +172,11 @@ export default class ContentPage extends Vue {
       }
     }
   }
+}
+footer {
+  font-size: 12px;
+  height: 30px;
+  line-height: 30px;
+  margin-top: 32px;
 }
 </style>

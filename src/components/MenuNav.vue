@@ -11,7 +11,7 @@
           isActive === list.index || currentIndex === list.index ? 'active' : ''
         "
         @mouseenter="active(list.index)"
-        @click="setWebIndex(list.index)"
+        @click="scrollToPosition(list.index)"
       >
         <UseIcon :name="list.icon" />
         <span v-show="!isClose">{{ list.class }}</span>
@@ -46,6 +46,13 @@ export default class MenuNav extends Vue {
   setWebIndex(index: number) {
     // console.log(index);
     this.$store.commit("setCurrent", index);
+  }
+  scrollToPosition(index: number) {
+    document.getElementsByClassName("roll")[index].scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+      inline: "nearest",
+    });
   }
 }
 </script>
